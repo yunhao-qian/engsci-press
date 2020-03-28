@@ -73,7 +73,7 @@ void array_remove(Array *array, int index) {
     }
     size_t move_size;
     if (index < array->size / 2) {
-        move_size = (index - 1) * sizeof(void *);
+        move_size = index * sizeof(void *);
         memmove(array->data + 1, array->data, move_size);
         ++array->data;
     } else {
