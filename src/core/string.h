@@ -23,6 +23,6 @@ String *trim(const String *string);
 void trim_in_place(String *string);
 
 String *get_line(FILE *stream);
-void split_string(const String *string);
+Array *split_string(const String *string);
 
 #endif // CORE_STRING_H_
