@@ -142,21 +142,21 @@ String *trie_successor(const Trie *trie, const String *word) {
     return NULL;
 }
 
-static void transverse_trie_nodes(const TrieNode *root, Array *entries) {
+static void traverse_trie_nodes(const TrieNode *root, Array *entries) {
     for (int i = 0; i < root->entries->size; ++i) {
         array_append(entries, root->entries->data[i]);
     }
     if (root->child_count > 0) {
         for (int i = 0; i < ALPHABET_SIZE; ++i) {
             if (root->children[i]) {
-                transverse_trie_nodes(root->children[i], entries);
+                traverse_trie_nodes(root->children[i], entries);
             }
         }
     }
 }
 
-Array *transverse_trie(const Trie *trie) {
+Array *traverse_trie(const Trie *trie) {
     Array *entries = new_array(NULL);
-    transverse_trie_nodes(trie->root, entries);
+    traverse_trie_nodes(trie->root, entries);
     return entries;
 }
