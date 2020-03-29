@@ -22,6 +22,9 @@ void delete_string(void *p) {
 }
 
 bool is_valid_key(const String *string, bool case_sensitive) {
+    if (string->size <= 0) {
+        return false;
+    }
     for (int i = 0; i < string->size; ++i) {
         if (!is_valid_key_char(string->text[i], case_sensitive)) {
             return false;

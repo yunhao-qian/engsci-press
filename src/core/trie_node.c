@@ -1,7 +1,7 @@
 #include "core/trie_node.h"
 
 TrieNode *new_trie_node(char letter, TrieNode *parent) {
-    assert(is_valid_key_char(letter, true) &&
+    assert((!parent || is_valid_key_char(letter, true)) &&
            "new_trie_node: invalid character");
     TrieNode *node = malloc(sizeof(TrieNode));
     node->letter = letter;

@@ -26,8 +26,7 @@ DictEntry *new_dict_entry(const String *line) {
     entry->headword = substring(line, begin_index, open_index);
     trim_in_place(entry->headword);
     if (!is_valid_key(entry->headword, false)) {
-        WARNING("Headword \"%s\"contains invalid characters.\n",
-                entry->headword->text);
+        WARNING("Invalid headword: %s\n", entry->headword->text);
         delete_string(entry->headword);
         free(entry);
         return NULL;
@@ -73,7 +72,7 @@ bool confirm(bool default_yes, const char *message) {
 
 DictEntry *input_dict_entry(const String *headword) {
     if (!is_valid_key(headword, false)) {
-        printf("Headword contains invalid characters.\nDo nothing.\n");
+        WARNING("Invalid headword: %s\nDo nothing.\n", headword->text);
         return NULL;
     }
     DictEntry *entry = malloc(sizeof(DictEntry));
