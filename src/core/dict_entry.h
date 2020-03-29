@@ -3,7 +3,7 @@
 
 #include "core/string.h"
 
-typedef struct {
+typedef struct DictEntry {
     String *headword, *word_class, *definition;
 } DictEntry;
 

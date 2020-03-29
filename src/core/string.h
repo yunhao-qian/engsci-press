@@ -3,7 +3,7 @@
 
 #include "core/array.h"
 
-typedef struct {
+typedef struct String {
     char *text, *head;
     int size, capacity;
 } String;
@@ -11,6 +11,7 @@ typedef struct {
 String *new_string(const char *text, int size);
 void delete_string(void *string);
 
+bool is_valid_key(const String *string, bool case_sensitive);
 int string_index(const String *string, char value);
 
 String *to_lower(const String *string);

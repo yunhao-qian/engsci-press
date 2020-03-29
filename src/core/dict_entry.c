@@ -24,9 +24,16 @@ DictEntry *new_dict_entry(const String *line) {
         --end_index;
     }
     entry->headword = substring(line, begin_index, open_index);
+    trim_in_place(entry->headword);
+    if (!is_valid_key(entry->headword, false)) {
+        WARNING("Headword \"%s\"contains invalid characters.\n",
+                entry->headword->text);
+        delete_string(entry->headword);
+        free(entry);
+        return NULL;
+    }
     entry->word_class = substring(line, open_index + 1, close_index);
     entry->definition = substring(line, close_index + 1, end_index);
-    trim_in_place(entry->headword);
     trim_in_place(entry->word_class);
     trim_in_place(entry->definition);
     return entry;
@@ -65,6 +72,10 @@ bool confirm(bool default_yes, const char *message) {
 }
 
 DictEntry *input_dict_entry(const String *headword) {
+    if (!is_valid_key(headword, false)) {
+        printf("Headword contains invalid characters.\nDo nothing.\n");
+        return NULL;
+    }
     DictEntry *entry = malloc(sizeof(DictEntry));
     entry->headword = trim(headword);
     printf("Word class: ");
@@ -77,6 +88,7 @@ DictEntry *input_dict_entry(const String *headword) {
     display_dict_entry(entry);
     if (!confirm(true, "Continue?")) {
         delete_dict_entry(entry);
+        printf("Do nothing.\n");
         return NULL;
     } else {
         return entry;

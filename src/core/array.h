@@ -3,7 +3,7 @@
 
 #include "core/global.h"
 
-typedef struct {
+typedef struct Array {
     void **data, **head;
     int size, capacity;
     Destructor destructor;

@@ -21,6 +21,15 @@ void delete_string(void *p) {
     free(string);
 }
 
+bool is_valid_key(const String *string, bool case_sensitive) {
+    for (int i = 0; i < string->size; ++i) {
+        if (!is_valid_key_char(string->text[i], case_sensitive)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int string_index(const String *string, char value) {
     char *find = strchr(string->text, value);
     if (!find) {
