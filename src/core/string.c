@@ -64,22 +64,17 @@ static void shrink_string(String *string) {
 }
 
 String *substring(const String *string, int start, int end) {
+    if (start >= end) {
+        return new_string("", 0);
+    }
     assert(start >= 0 && start < string->size &&
            "substring: start index out of range");
     assert(end >= 0 && end <= string->size &&
            "substring: end index out of range");
-    if (start >= end) {
-        return new_string("", 0);
-    } else {
-        return new_string(string->text + start, end - start);
-    }
+    return new_string(string->text + start, end - start);
 }
 
 void substring_in_place(String *string, int start, int end) {
-    assert(start >= 0 && start < string->size &&
-           "substring_in_place: start index out of range");
-    assert(end >= 0 && end <= string->size &&
-           "substring_in_place: end index out of range");
     if (start == 0 && end == string->size) {
         return;
     }
@@ -87,11 +82,16 @@ void substring_in_place(String *string, int start, int end) {
         string->text = string->head;
         string->text[0] = '\0';
         string->size = 0;
-    } else {
-        string->text += start;
-        string->size = end - start;
-        string->text[string->size] = '\0';
+        shrink_string(string);
+        return;
     }
+    assert(start >= 0 && start < string->size &&
+           "substring_in_place: start index out of range");
+    assert(end >= 0 && end <= string->size &&
+           "substring_in_place: end index out of range");
+    string->text += start;
+    string->size = end - start;
+    string->text[string->size] = '\0';
     shrink_string(string);
 }
 
