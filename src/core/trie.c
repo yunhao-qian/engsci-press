@@ -76,6 +76,7 @@ void trie_insert(Trie *trie, DictEntry *entry) {
             node = node->children[index];
         }
     }
+    delete_string(lowered);
     array_append(node->entries, entry);
     ++trie->size;
 }
@@ -83,7 +84,9 @@ void trie_insert(Trie *trie, DictEntry *entry) {
 void trie_remove(Trie *trie, const String *word, bool case_sensitive) {
     assert(is_valid_key(word, false) && "trie_remove: invalid headword");
     TrieNode *node = get_trie_node(trie, word);
-    assert(node && "trie_remove: trie node does not exist");
+    if (!node) {
+        return;
+    }
     if (case_sensitive) {
         int i = 0;
         DictEntry *entry;
@@ -119,7 +122,8 @@ String *trie_predecessor(const Trie *trie, const String *word) {
     node = previous_trie_node(node);
     while (node) {
         if (node->entries->size > 0) {
-            return to_lower((String *)(node->entries->data[0]));
+            DictEntry *entry = node->entries->data[0];
+            return to_lower(entry->headword);
         }
         node = previous_trie_node(node);
     }
@@ -135,7 +139,8 @@ String *trie_successor(const Trie *trie, const String *word) {
     node = next_trie_node(node);
     while (node) {
         if (node->entries->size > 0) {
-            return to_lower((String *)(node->entries->data[0]));
+            DictEntry *entry = node->entries->data[0];
+            return to_lower(entry->headword);
         }
         node = next_trie_node(node);
     }

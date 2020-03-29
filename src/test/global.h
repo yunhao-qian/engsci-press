@@ -4,6 +4,8 @@
 #include "core/array.h"
 #include "core/dict_entry.h"
 #include "core/string.h"
+#include "core/trie.h"
+#include "core/trie_node.h"
 
 #define CHECK_BASE(equality, expect, actual, format)                           \
     do {                                                                       \

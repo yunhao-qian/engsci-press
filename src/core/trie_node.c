@@ -54,16 +54,17 @@ TrieNode *next_trie_node(const TrieNode *node) {
             }
         }
     }
-    int index = char_to_index(node->letter);
     TrieNode *parent = node->parent;
+    int index;
     while (parent) {
+        index = char_to_index(node->letter);
         for (int i = index + 1; i < ALPHABET_SIZE; ++i) {
             if (parent->children[i]) {
                 return parent->children[i];
             }
         }
-        index = char_to_index(parent->letter);
-        parent = parent->parent;
+        node = parent;
+        parent = node->parent;
     }
     return NULL;
 }
