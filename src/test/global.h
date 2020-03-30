@@ -3,6 +3,7 @@
 
 #include "core/array.h"
 #include "core/dict_entry.h"
+#include "core/matcher.h"
 #include "core/string.h"
 #include "core/trie.h"
 #include "core/trie_node.h"
