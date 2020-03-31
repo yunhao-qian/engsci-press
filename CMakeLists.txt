@@ -6,6 +6,10 @@ include_directories(src)
 file(GLOB CORE_SOURCE src/core/*.c)
 add_library(core STATIC ${CORE_SOURCE})
 
+file(GLOB MAIN_SOURCE src/main/*.c)
+add_executable(engsci_press ${MAIN_SOURCE})
+target_link_libraries(engsci_press core)
+
 file(GLOB TEST_SOURCE src/test/*.c)
 foreach(source_name ${TEST_SOURCE})
     get_filename_component(executable_name ${source_name} NAME_WE)
