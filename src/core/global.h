@@ -12,9 +12,9 @@
 #define ALPHABET_SIZE 59
 
 #ifdef SUPPRESS_WARNINGS
-#define WARNING(...)
+#define WARN(...)
 #else
-#define WARNING(...) fprintf(stderr, __VA_ARGS__)
+#define WARN(...) fprintf(stderr, __VA_ARGS__)
 #endif // SUPPRESS_WARNINGS
 
 typedef void (*Destructor)(void *);

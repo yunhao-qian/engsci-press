@@ -16,7 +16,7 @@ void create_dictionary() {
         file_name[index] = c;
         stream = fopen(file_name, "r");
         if (!stream) {
-            WARNING("Cannot open file: %s\n", file_name);
+            WARN("Cannot open file: %s\n", file_name);
             continue;
         }
         line = get_line(stream);
@@ -24,7 +24,7 @@ void create_dictionary() {
             if (line->size > 0) {
                 entry = new_dict_entry(line);
                 if (!entry) {
-                    WARNING("Failed to parse the following line in %s:\n%s\n",
+                    WARN("Failed to parse the following line in %s:\n%s\n",
                             file_name, line->text);
                 } else {
                     trie_insert(dictionary, entry);

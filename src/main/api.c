@@ -60,38 +60,38 @@ bool esp_parse_arguments(Array *arguments, EspMode mode) {
     } else if (!strcmp(leading->text, "exit")) {
         returned = esp_on_exit(arguments, mode);
     } else {
-        WARNING("Unknown leading argument: %s\n", leading->text);
+        WARN("Unknown leading argument: %s\n", leading->text);
     }
     delete_string(leading);
     return returned;
 }
 
-#define WARNING_NOT_SUPPORTED(argument, mode)                                  \
-    WARNING("Does not support \"%s\" in %s mode.\n", argument, mode);
+#define WARN_NOT_SUPPORTED(argument, mode)                                     \
+    WARN("Does not support \"%s\" in %s mode.\n", argument, mode);
 
-#define WARNING_MISSING(expected)                                              \
-    WARNING("Missing argument: %s expected.\n", expected)
+#define WARN_MISSING(expected)                                                 \
+    WARN("Missing argument: %s expected.\n", expected)
 
-#define WARNING_REDUNDANT(arguments, start_index)                              \
-    WARNING("Redundant arguments: ignore arguments since \"%s\".\n",           \
-            ((String *)(arguments)->data[start_index])->text)
+#define WARN_REDUNDANT(arguments, start_index)                                 \
+    WARN("Redundant arguments: ignore arguments since \"%s\".\n",              \
+         ((String *)(arguments)->data[start_index])->text)
 
 void esp_on_load(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_COMMAND_LINE) {
-        WARNING_NOT_SUPPORTED("load", "command-line");
+        WARN_NOT_SUPPORTED("load", "command-line");
         return;
     }
     if (arguments->size < 1) {
-        WARNING_MISSING("file name");
+        WARN_MISSING("file name");
         return;
     }
     if (arguments->size > 1) {
-        WARNING_REDUNDANT(arguments, 1);
+        WARN_REDUNDANT(arguments, 1);
     }
     const char *file_name = ((String *)arguments->data[0])->text;
     FILE *stream = fopen(file_name, "r");
     if (!stream) {
-        WARNING("Cannot open file: %s\nDo nothing.\n", file_name);
+        WARN("Cannot open file: %s\nDo nothing.\n", file_name);
         return;
     }
     String *line = get_line(stream);
@@ -101,8 +101,8 @@ void esp_on_load(Array *arguments, EspMode mode) {
         if (line->size > 0) {
             entry = new_dict_entry(line);
             if (!entry) {
-                WARNING("Failed to parse the following line in %s:\n%s\n",
-                        file_name, line->text);
+                WARN("Failed to parse the following line in %s:\n%s\n",
+                     file_name, line->text);
             } else {
                 trie_insert(dictionary, entry);
                 ++count;
@@ -119,11 +119,11 @@ void esp_on_load(Array *arguments, EspMode mode) {
 
 void esp_on_search(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("search", "background");
+        WARN_NOT_SUPPORTED("search", "background");
         return;
     }
     if (arguments->size <= 0) {
-        WARNING_MISSING("headword");
+        WARN_MISSING("headword");
         return;
     }
     String *word = join_strings(arguments, ' ');
@@ -136,7 +136,7 @@ void esp_on_search(Array *arguments, EspMode mode) {
     }
     Array *results = trie_search(dictionary, word, case_sensitive);
     if (results->size <= 0) {
-        WARNING("Find no entry named: %s\n", word->text);
+        WARN("Find no entry named: %s\n", word->text);
         if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
             printf("Tip: use lower-case for case insensitive search.\n");
         }
@@ -153,15 +153,15 @@ void esp_on_search(Array *arguments, EspMode mode) {
 
 void esp_on_insert(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("insert", "background");
+        WARN_NOT_SUPPORTED("insert", "background");
         return;
     }
     if (mode == ESP_MODE_COMMAND_LINE) {
-        WARNING_NOT_SUPPORTED("insert", "command-line");
+        WARN_NOT_SUPPORTED("insert", "command-line");
         return;
     }
     if (arguments->size <= 0) {
-        WARNING_MISSING("headword");
+        WARN_MISSING("headword");
         return;
     }
     String *headword = join_strings(arguments, ' ');
@@ -174,11 +174,11 @@ void esp_on_insert(Array *arguments, EspMode mode) {
 
 void esp_on_remove(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_COMMAND_LINE) {
-        WARNING_NOT_SUPPORTED("remove", "command-line");
+        WARN_NOT_SUPPORTED("remove", "command-line");
         return;
     }
     if (arguments->size <= 0) {
-        WARNING_MISSING("headword");
+        WARN_MISSING("headword");
         return;
     }
     String *headword = join_strings(arguments, ' ');
@@ -193,7 +193,7 @@ void esp_on_remove(Array *arguments, EspMode mode) {
     int remove_count = results->size;
     bool shall_remove = true;
     if (remove_count <= 0) {
-        WARNING("Find no entry named: %s\n", headword->text);
+        WARN("Find no entry named: %s\n", headword->text);
         if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
             printf("Tip: use lower-case for case-insensitive remove.\n");
         }
@@ -219,43 +219,43 @@ void esp_on_remove(Array *arguments, EspMode mode) {
 
 void esp_on_neighbour(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("neighbour", "background");
+        WARN_NOT_SUPPORTED("neighbour", "background");
         return;
     }
 }
 
 void esp_on_prefix(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("prefix", "background");
+        WARN_NOT_SUPPORTED("prefix", "background");
         return;
     }
 }
 
 void esp_on_match(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("match", "background");
+        WARN_NOT_SUPPORTED("match", "background");
         return;
     }
 }
 
 void esp_on_size(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("size", "background");
+        WARN_NOT_SUPPORTED("size", "background");
         return;
     }
     if (arguments->size > 0) {
-        WARNING_REDUNDANT(arguments, 0);
+        WARN_REDUNDANT(arguments, 0);
     }
     printf("Dictionary size: %d\n", dictionary->size);
 }
 
 void esp_on_save(Array *arguments, EspMode mode) {
     if (arguments->size < 1) {
-        WARNING_MISSING("file name");
+        WARN_MISSING("file name");
         return;
     }
     if (arguments->size > 1) {
-        WARNING_REDUNDANT(arguments, 1);
+        WARN_REDUNDANT(arguments, 1);
     }
     if (mode == ESP_MODE_INTERACTIVE && dictionary->size <= 0 &&
         !confirm(false, "The dictionary is empty. Continue?")) {
@@ -265,7 +265,7 @@ void esp_on_save(Array *arguments, EspMode mode) {
     const char *file_name = ((String *)arguments->data[0])->text;
     FILE *stream = fopen(file_name, "wb");
     if (!stream) {
-        WARNING("Cannot open file: %s\nDo nothing.\n", file_name);
+        WARN("Cannot open file: %s\nDo nothing.\n", file_name);
         return;
     }
     Array *entries = traverse_trie(dictionary);
@@ -281,15 +281,15 @@ void esp_on_save(Array *arguments, EspMode mode) {
 
 bool esp_on_exit(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_BACKGROUND) {
-        WARNING_NOT_SUPPORTED("exit", "background");
+        WARN_NOT_SUPPORTED("exit", "background");
         return true;
     }
     if (mode == ESP_MODE_COMMAND_LINE) {
-        WARNING_NOT_SUPPORTED("exit", "command-line");
+        WARN_NOT_SUPPORTED("exit", "command-line");
         return true;
     }
     if (arguments->size > 0) {
-        WARNING_REDUNDANT(arguments, 0);
+        WARN_REDUNDANT(arguments, 0);
     }
     return !confirm(true, "Are you sure you want to exit?");
 }

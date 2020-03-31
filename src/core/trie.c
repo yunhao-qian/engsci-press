@@ -40,7 +40,7 @@ static TrieNode *get_trie_node(const Trie *trie, const String *word) {
 Array *trie_search(const Trie *trie, const String *word, bool case_sensitive) {
     Array *entries = new_array(NULL);
     if (!is_valid_key(word, false)) {
-        WARNING("Invalid headword: %s\n", word->text);
+        WARN("Invalid headword: %s\n", word->text);
         return entries;
     }
     TrieNode *node = get_trie_node(trie, word);
@@ -116,7 +116,7 @@ void trie_remove(Trie *trie, const String *word, bool case_sensitive) {
 String *trie_predecessor(const Trie *trie, const String *word) {
     TrieNode *node = get_trie_node(trie, word);
     if (!node) {
-        WARNING("Cannot find word: %s\n", word->text);
+        WARN("Cannot find word: %s\n", word->text);
         return NULL;
     }
     node = previous_trie_node(node);
@@ -133,7 +133,7 @@ String *trie_predecessor(const Trie *trie, const String *word) {
 String *trie_successor(const Trie *trie, const String *word) {
     TrieNode *node = get_trie_node(trie, word);
     if (!node) {
-        WARNING("Cannot find word: %s\n", word->text);
+        WARN("Cannot find word: %s\n", word->text);
         return NULL;
     }
     node = next_trie_node(node);
