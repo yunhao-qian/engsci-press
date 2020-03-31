@@ -33,7 +33,7 @@ void esp_cleanup(EspMode mode) {
 }
 
 bool esp_parse_arguments(Array *arguments, EspMode mode) {
-    if (arguments->size < 0) {
+    if (arguments->size <= 0) {
         return true;
     }
     String *leading = to_lower(arguments->data[0]);
@@ -70,10 +70,10 @@ bool esp_parse_arguments(Array *arguments, EspMode mode) {
     WARNING("Does not support \"%s\" in %s mode.\n", argument, mode);
 
 #define WARNING_MISSING(expected)                                              \
-    WARNING("Missing argument(s): %s expected.\n", expected)
+    WARNING("Missing argument: %s expected.\n", expected)
 
 #define WARNING_REDUNDANT(arguments, start_index)                              \
-    WARNING("Redundant arguments: arguments since \"%s\" are ignored.\n",      \
+    WARNING("Redundant arguments: ignore arguments since \"%s\".\n",           \
             ((String *)(arguments)->data[start_index])->text)
 
 void esp_on_load(Array *arguments, EspMode mode) {

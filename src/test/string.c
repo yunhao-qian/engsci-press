@@ -147,11 +147,54 @@ void test_split() {
     discard_strings();
 }
 
+int join_counts[N] = {4, 2, 3, 12, 5, 2, 3, 1, 5, 3};
+
+char *join_fields[N][15] = {{"pen", "pineapple", "apple", "pie"},
+                            {"banana", "nanana"},
+                            {"iPhone", "XS", "Max"},
+                            {"It", "was", "the", "age", "of", "wisdom.", "It",
+                             "was", "the", "age", "of", "foolishness."},
+                            {"gcc", "-g", "string.c", "-o", "string.o"},
+                            {"Engineering", "Science"},
+                            {"University", "of", "Toronto"},
+                            {"t"},
+                            {"Designed", "by", "Apple", "in", "California"},
+                            {"ESC190", "Teaching", "Team"}};
+
+char *join_expect[N] = {
+    "pen pineapple apple pie",
+    "banana nanana",
+    "iPhone XS Max",
+    "It was the age of wisdom. It was the age of foolishness.",
+    "gcc -g string.c -o string.o",
+    "Engineering Science",
+    "University of Toronto",
+    "t",
+    "Designed by Apple in California",
+    "ESC190 Teaching Team"};
+
+void test_join() {
+    Array *strings;
+    String *field, *joined;
+    for (int i = 0; i < N; ++i) {
+        strings = new_array(delete_string);
+        for (int j = 0; j < join_counts[i]; ++j) {
+            field = new_string(join_fields[i][j], -1);
+            array_append(strings, field);
+        }
+        joined = join_strings(strings, ' ');
+        CHECK_STRING(join_expect[i], joined);
+        delete_string(joined);
+        delete_array(strings);
+    }
+}
+
 int main() {
     test_index();
     test_to_lower();
     test_substring();
     test_trim();
     test_split();
+    test_join();
     DISPLAY_TEST_RESULT();
 }

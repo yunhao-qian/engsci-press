@@ -25,5 +25,6 @@ void trim_in_place(String *string);
 
 String *get_line(FILE *stream);
 Array *split_string(const String *string);
+String *join_strings(const Array *strings, char c);
 
 #endif // CORE_STRING_H_

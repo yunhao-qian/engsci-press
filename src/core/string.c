@@ -176,3 +176,27 @@ Array *split_string(const String *string) {
     }
     return array;
 }
+
+String *join_strings(const Array *strings, char c) {
+    assert(strings->size > 0 && "join_strings: string list is empty");
+    int size = strings->size - 1;
+    for (int i = 0; i < strings->size; ++i) {
+        size += ((String *)strings->data[i])->size;
+    }
+    String *joined = malloc(sizeof(String)), *field;
+    size_t block_size;
+    joined->text = joined->head = malloc((size + 1) * sizeof(char));
+    for (int i = 0, j = 0; i < strings->size; ++i) {
+        if (i) {
+            joined->text[j] = c;
+            ++j;
+        }
+        field = strings->data[i];
+        block_size = field->size * sizeof(char);
+        memcpy(joined->text + j, field->text, block_size);
+        j += block_size;
+    }
+    joined->text[size] = '\0';
+    joined->size = joined->capacity = size;
+    return joined;
+}
