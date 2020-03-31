@@ -118,27 +118,124 @@ void esp_on_load(Array *arguments, EspMode mode) {
 }
 
 void esp_on_search(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_BACKGROUND) {
+        WARNING_NOT_SUPPORTED("search", "background");
+        return;
+    }
+    if (arguments->size <= 0) {
+        WARNING_MISSING("headword");
+        return;
+    }
+    String *word = join_strings(arguments, ' ');
+    bool case_sensitive = false;
+    for (int i = 0; i < word->size; ++i) {
+        if (isupper(word->text[i])) {
+            case_sensitive = true;
+            break;
+        }
+    }
+    Array *results = trie_search(dictionary, word, case_sensitive);
+    if (results->size <= 0) {
+        WARNING("Find no entry named: %s\n", word->text);
+        if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
+            printf("Tip: use lower-case for case insensitive search.\n");
+        }
+    } else {
+        for (int i = 0; i < results->size; ++i) {
+            putchar('\n');
+            display_dict_entry(results->data[i]);
+        }
+        putchar('\n');
+    }
+    delete_array(results);
+    delete_string(word);
 }
 
 void esp_on_insert(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_BACKGROUND) {
+        WARNING_NOT_SUPPORTED("insert", "background");
+        return;
+    }
+    if (mode == ESP_MODE_COMMAND_LINE) {
+        WARNING_NOT_SUPPORTED("insert", "command-line");
+        return;
+    }
+    if (arguments->size <= 0) {
+        WARNING_MISSING("headword");
+        return;
+    }
+    String *headword = join_strings(arguments, ' ');
+    DictEntry *entry = input_dict_entry(headword);
+    if (entry) {
+        trie_insert(dictionary, entry);
+    }
+    delete_string(headword);
 }
 
 void esp_on_remove(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_COMMAND_LINE) {
+        WARNING_NOT_SUPPORTED("remove", "command-line");
+        return;
+    }
+    if (arguments->size <= 0) {
+        WARNING_MISSING("headword");
+        return;
+    }
+    String *headword = join_strings(arguments, ' ');
+    bool case_sensitive = false;
+    for (int i = 0; i < headword->size; ++i) {
+        if (isupper(headword->text[i])) {
+            case_sensitive = true;
+            break;
+        }
+    }
+    Array *results = trie_search(dictionary, headword, case_sensitive);
+    int remove_count = results->size;
+    bool shall_remove = true;
+    if (remove_count <= 0) {
+        WARNING("Find no entry named: %s\n", headword->text);
+        if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
+            printf("Tip: use lower-case for case-insensitive remove.\n");
+        }
+        shall_remove = false;
+    } else if (mode == ESP_MODE_INTERACTIVE) {
+        printf("The following entries will be removed:\n");
+        for (int i = 0; i < remove_count; ++i) {
+            putchar('\n');
+            display_dict_entry(results->data[i]);
+        }
+        shall_remove = confirm(true, "\nWant to continue?");
+    }
+    delete_array(results);
+    if (shall_remove) {
+        trie_remove(dictionary, headword, case_sensitive);
+        if (mode == ESP_MODE_INTERACTIVE) {
+            printf("%d entried removed.\n", remove_count);
+        }
+    } else if (mode == ESP_MODE_INTERACTIVE) {
+        printf("Do nothing.\n");
+    }
 }
 
 void esp_on_neighbour(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_BACKGROUND) {
+        WARNING_NOT_SUPPORTED("neighbour", "background");
+        return;
+    }
 }
 
 void esp_on_prefix(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_BACKGROUND) {
+        WARNING_NOT_SUPPORTED("prefix", "background");
+        return;
+    }
 }
 
 void esp_on_match(Array *arguments, EspMode mode) {
-    ;
+    if (mode == ESP_MODE_BACKGROUND) {
+        WARNING_NOT_SUPPORTED("match", "background");
+        return;
+    }
 }
 
 void esp_on_size(Array *arguments, EspMode mode) {
