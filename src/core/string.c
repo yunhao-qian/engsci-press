@@ -22,7 +22,7 @@ void delete_string(void *p) {
 }
 
 bool is_valid_key(const String *string, bool case_sensitive) {
-    if (string->size <= 0) {
+    if (string->size <= 0 || string_start_with(string, "--")) {
         return false;
     }
     for (int i = 0; i < string->size; ++i) {

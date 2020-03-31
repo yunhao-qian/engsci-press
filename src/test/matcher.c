@@ -25,7 +25,7 @@ void create_dictionary() {
                 entry = new_dict_entry(line);
                 if (!entry) {
                     WARN("Failed to parse the following line in %s:\n%s\n",
-                            file_name, line->text);
+                         file_name, line->text);
                 } else {
                     trie_insert(dictionary, entry);
                 }

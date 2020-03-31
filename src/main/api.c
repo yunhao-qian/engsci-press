@@ -1,4 +1,5 @@
 #include "main/api.h"
+#include "main/utility.h"
 
 Trie *dictionary;
 
@@ -66,16 +67,6 @@ bool esp_parse_arguments(Array *arguments, EspMode mode) {
     return returned;
 }
 
-#define WARN_NOT_SUPPORTED(argument, mode)                                     \
-    WARN("Does not support \"%s\" in %s mode.\n", argument, mode);
-
-#define WARN_MISSING(expected)                                                 \
-    WARN("Missing argument: %s expected.\n", expected)
-
-#define WARN_REDUNDANT(arguments, start_index)                                 \
-    WARN("Redundant arguments: ignore arguments since \"%s\".\n",              \
-         ((String *)(arguments)->data[start_index])->text)
-
 void esp_on_load(Array *arguments, EspMode mode) {
     if (mode == ESP_MODE_COMMAND_LINE) {
         WARN_NOT_SUPPORTED("load", "command-line");
@@ -137,9 +128,7 @@ void esp_on_search(Array *arguments, EspMode mode) {
     Array *results = trie_search(dictionary, word, case_sensitive);
     if (results->size <= 0) {
         WARN("Find no entry named: %s\n", word->text);
-        if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
-            printf("Tip: use lower-case for case insensitive search.\n");
-        }
+        word_hint(word, dictionary, case_sensitive);
     } else {
         for (int i = 0; i < results->size; ++i) {
             putchar('\n');
@@ -194,9 +183,7 @@ void esp_on_remove(Array *arguments, EspMode mode) {
     bool shall_remove = true;
     if (remove_count <= 0) {
         WARN("Find no entry named: %s\n", headword->text);
-        if (mode == ESP_MODE_INTERACTIVE && case_sensitive) {
-            printf("Tip: use lower-case for case-insensitive remove.\n");
-        }
+        word_hint(headword, dictionary, case_sensitive);
         shall_remove = false;
     } else if (mode == ESP_MODE_INTERACTIVE) {
         printf("The following entries will be removed:\n");
@@ -222,6 +209,26 @@ void esp_on_neighbour(Array *arguments, EspMode mode) {
         WARN_NOT_SUPPORTED("neighbour", "background");
         return;
     }
+    if (arguments->size <= 0) {
+        WARN_MISSING("headword");
+        return;
+    }
+    int radius = 10;
+    if (string_start_with(arguments->data[0], "--")) {
+        if (arguments->size <= 1) {
+            WARN_MISSING("headword");
+            return;
+        }
+        int number = parse_unsigned_int_flag(arguments->data[0]);
+        if (number < 0) {
+            WARN("Invalid flag: %s\n", ((String *)arguments->data[0])->text);
+        } else {
+            radius = number;
+        }
+        array_remove(arguments, 0);
+    }
+    String *word = join_strings(arguments, ' ');
+    delete_string(word);
 }
 
 void esp_on_prefix(Array *arguments, EspMode mode) {
@@ -229,6 +236,26 @@ void esp_on_prefix(Array *arguments, EspMode mode) {
         WARN_NOT_SUPPORTED("prefix", "background");
         return;
     }
+    if (arguments->size <= 0) {
+        WARN_MISSING("prefix string");
+        return;
+    }
+    int max_count = 10;
+    if (string_start_with(arguments->data[0], "--")) {
+        if (arguments->size <= 1) {
+            WARN_MISSING("prefix string");
+            return;
+        }
+        int number = parse_unsigned_int_flag(arguments->data[0]);
+        if (number < 0) {
+            WARN("Invalid flag: %s\n", ((String *)arguments->data[0])->text);
+        } else {
+            max_count = number;
+        }
+        array_remove(arguments, 0);
+    }
+    String *prefix = join_strings(arguments, ' ');
+    delete_string(prefix);
 }
 
 void esp_on_match(Array *arguments, EspMode mode) {
@@ -236,6 +263,33 @@ void esp_on_match(Array *arguments, EspMode mode) {
         WARN_NOT_SUPPORTED("match", "background");
         return;
     }
+    if (arguments->size <= 0) {
+        WARN_MISSING("headword");
+        return;
+    }
+    int tolerance = -1;
+    if (string_start_with(arguments->data[0], "--")) {
+        if (arguments->size <= 1) {
+            WARN_MISSING("headword");
+            return;
+        }
+        int number = parse_unsigned_int_flag(arguments->data[0]);
+        if (number < 0) {
+            WARN("Invalid flag: %s\n", ((String *)arguments->data[0])->text);
+        } else {
+            tolerance = number;
+        }
+        array_remove(arguments, 0);
+    }
+    String *pattern = join_strings(arguments, ' ');
+    String *matched = trie_closest_match(dictionary, pattern, tolerance);
+    if (!matched) {
+        WARN("Find no entry similar to: %s\n", pattern->text);
+    } else {
+        printf("%s\n", matched->text);
+        delete_string(matched);
+    }
+    delete_string(pattern);
 }
 
 void esp_on_size(Array *arguments, EspMode mode) {
