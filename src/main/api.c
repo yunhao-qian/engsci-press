@@ -28,8 +28,8 @@ void esp_initialize(EspMode mode) {
 void esp_cleanup(EspMode mode) {
     if (mode == ESP_MODE_INTERACTIVE) {
         printf("\nExiting...\n");
-        delete_trie(dictionary);
     }
+    delete_trie(dictionary);
 }
 
 bool esp_parse_arguments(Array *arguments, EspMode mode) {
