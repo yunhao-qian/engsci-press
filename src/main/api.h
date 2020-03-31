@@ -8,6 +8,10 @@
 #include "core/trie.h"
 #include "core/trie_node.h"
 
+#ifndef ESP_RC_PATH
+#define ESP_RC_PATH "../.esp_rc"
+#endif // ESP_RC_PATH
+
 typedef enum EspMode {
     ESP_MODE_INTERACTIVE,
     ESP_MODE_BACKGROUND,
@@ -19,15 +23,15 @@ void esp_cleanup(EspMode mode);
 
 bool esp_parse_arguments(Array *arguments, EspMode mode);
 
-void esp_on_load(const Array *arguments, EspMode mode);
-void esp_on_search(const Array *arguments, EspMode mode);
-void esp_on_insert(const Array *arguments, EspMode mode);
-void esp_on_remove(const Array *arguments, EspMode mode);
-void esp_on_neighbour(const Array *arguments, EspMode mode);
-void esp_on_prefix(const Array *arguments, EspMode mode);
-void esp_on_match(const Array *arguments, EspMode mode);
-void esp_on_size(const Array *arguments, EspMode mode);
-void esp_on_save(const Array *arguments, EspMode mode);
-bool esp_on_exit(const Array *arguments, EspMode mode);
+void esp_on_load(Array *arguments, EspMode mode);
+void esp_on_search(Array *arguments, EspMode mode);
+void esp_on_insert(Array *arguments, EspMode mode);
+void esp_on_remove(Array *arguments, EspMode mode);
+void esp_on_neighbour(Array *arguments, EspMode mode);
+void esp_on_prefix(Array *arguments, EspMode mode);
+void esp_on_match(Array *arguments, EspMode mode);
+void esp_on_size(Array *arguments, EspMode mode);
+void esp_on_save(Array *arguments, EspMode mode);
+bool esp_on_exit(Array *arguments, EspMode mode);
 
 #endif // MAIN_API_H_
