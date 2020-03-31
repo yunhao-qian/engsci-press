@@ -189,6 +189,25 @@ void test_join() {
     }
 }
 
+const char *prefixes[N] = {"pen",        "  banana", "iPhone XS Max Pro",
+                           "",           "gcc -g",   "Engineering Science",
+                           "University", " \t",      "Designed by",
+                           "ESC190 "};
+
+bool start_expect[N] = {true, true,  false, true, true,
+                        true, false, true,  true, false};
+
+void test_start_with() {
+    String *string;
+    bool start;
+    for (int i = 0; i < N; ++i) {
+        string = new_string(texts[i], -1);
+        start = string_start_with(string, prefixes[i]);
+        delete_string(string);
+        CHECK_BOOL(start_expect[i], start);
+    }
+}
+
 int main() {
     test_index();
     test_to_lower();
@@ -196,5 +215,6 @@ int main() {
     test_trim();
     test_split();
     test_join();
+    test_start_with();
     DISPLAY_TEST_RESULT();
 }

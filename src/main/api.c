@@ -210,7 +210,7 @@ void esp_on_remove(Array *arguments, EspMode mode) {
     if (shall_remove) {
         trie_remove(dictionary, headword, case_sensitive);
         if (mode == ESP_MODE_INTERACTIVE) {
-            printf("%d entried removed.\n", remove_count);
+            printf("%d entries removed.\n", remove_count);
         }
     } else if (mode == ESP_MODE_INTERACTIVE) {
         printf("Do nothing.\n");

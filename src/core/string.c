@@ -200,3 +200,11 @@ String *join_strings(const Array *strings, char c) {
     joined->size = joined->capacity = size;
     return joined;
 }
+
+bool string_start_with(const String *string, const char *prefix) {
+    int size = strlen(prefix);
+    if (size > string->size) {
+        return false;
+    }
+    return !memcmp(string->text, prefix, size * sizeof(char));
+}

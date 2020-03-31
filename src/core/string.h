@@ -24,7 +24,10 @@ String *trim(const String *string);
 void trim_in_place(String *string);
 
 String *get_line(FILE *stream);
+
 Array *split_string(const String *string);
 String *join_strings(const Array *strings, char c);
+
+bool string_start_with(const String *string, const char *prefix);
 
 #endif // CORE_STRING_H_
