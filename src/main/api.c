@@ -5,9 +5,9 @@ Trie *dictionary;
 
 void esp_initialize(EspMode mode) {
     if (mode == ESP_MODE_INTERACTIVE) {
-        printf("===================="
-               " Command-Line Dictionary by Yunhao Qian "
-               "====================\n"
+        printf("               *=============================================\n"
+               "               ||  EngSci Press Dictionary by Yunhao Qian  ||\n"
+               "               *=============================================\n"
                "\nStarting...\n\n");
     }
     dictionary = new_trie();
