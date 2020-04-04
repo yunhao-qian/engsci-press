@@ -1,0 +1,177 @@
+// ===== Sentence =====
+S -> NP-Sg VP-Sg "."
+S -> NP-Pl VP-Pl "."
+0.4: S -> VP-Pl "!"
+0.2: S -> Aux-Sg NP-Sg VP-Pl "?"
+0.2: S -> Aux-Pl NP-Pl VP-Pl "?"
+0.1: S -> Wh-NP-Sg Aux-Sg NP-Sg VP-Pl "?"
+0.1: S -> Wh-NP-Pl Aux-Pl NP-Pl VP-Pl "?"
+
+// ===== Noun Phrase =====
+0.2: NP-Sg -> Pronoun-Sg
+// NP-Sg -> Proper-Noun-Sg
+NP-Sg -> Det-Sg (0.5: AP) Nominal-Sg
+0.2: NP-Pl -> Pronoun-Pl
+// NP-Pl -> Proper-Noun-Pl
+NP-Pl -> Det-Pl (0.5: AP) Nominal-Pl
+
+// ===== Nominal =====
+Nominal-Sg -> Noun-Sg
+0.3: Nominal-Sg -> Nominal-Sg PP
+0.3: Nominal-Sg -> Nominal-Sg Gerund-VP
+0.3: Nominal-Sg -> Nominal-Sg Rel-Clause-Sg
+Nominal-Pl -> Noun-Pl
+0.3: Nominal-Pl -> Nominal-Pl PP
+0.3: Nominal-Pl -> Nominal-Pl Gerund-VP
+0.3: Nominal-Pl -> Nominal-Pl Rel-Clause-Pl
+
+// ===== Gerundive Verb =====
+Gerund-VP -> Gerund-V
+Gerund-VP -> Gerund-V NP-Sg
+Gerund-VP -> Gerund-V NP-Pl
+Gerund-VP -> Gerund-V PP
+Gerund-VP -> Gerund-V NP-Sg PP
+Gerund-VP -> Gerund-V NP-Pl PP
+
+// ===== Relative Clause =====
+Rel-Clause-Sg -> Rel-Pronoun VP-Sg
+Rel-Clause-Pl -> Rel-Pronoun VP-Pl
+
+// ===== Verb Phrase =====
+VP-Sg -> Verb-Sg
+VP-Sg -> Verb-Sg NP-Sg
+VP-Sg -> Verb-Sg NP-Pl
+VP-Sg -> Verb-Sg NP-Sg PP
+VP-Sg -> Verb-Sg NP-Pl PP
+VP-Sg -> Verb-Sg PP
+VP-Pl -> Verb-Pl
+VP-Pl -> Verb-Pl NP-Sg
+VP-Pl -> Verb-Pl NP-Pl
+VP-Pl -> Verb-Pl NP-Sg PP
+VP-Pl -> Verb-Pl NP-Pl PP
+VP-Pl -> Verb-Pl PP
+
+// ===== Adjective Phrase =====
+AP -> Adj
+0.2: AP -> Adv AP
+
+// ===== Prepositional Phrase =====
+PP -> Preposition NP-Sg
+PP -> Preposition NP-Pl
+
+// ===== Determiner =====
+5: Det-Sg -> "the"
+5: Det-Pl -> "the"
+5: Det-Sg -> "a"
+4: Deg-Sg -> "this"
+4: Deg-Sg -> "that"
+4: Det-Pl -> "these"
+4: Det-Pl -> "those"
+Det-Sg -> "my"
+Det-Pl -> "my"
+Det-Sg -> "your"
+Det-Pl -> "your"
+Det-Sg -> "his"
+Det-Pl -> "his"
+Det-Sg -> "her"
+Deg-Pl -> "her"
+Det-Sg -> "its"
+Det-Pl -> "its"
+Det-Sg -> "our"
+Det-Pl -> "our"
+Det-Sg -> "their"
+Det-Pl -> "their"
+2: Det-Pl -> "a" "few"
+2: Det-Pl -> "many"
+2: Det-Pl -> "a" "lot" "of"
+3: Det-Pl -> "some"
+Det-Sg -> "any"
+Det-Sg -> "one"
+Det-Pl -> "all"
+Det-Sg -> "each"
+Det-Sg -> "every"
+Det-Sg -> "another"
+Det-Sg -> NP-Sg "'s"
+Det-Pl -> NP-Sg "'s"
+
+// ===== Auxiliary Verb =====
+Aux-Sg -> "has"
+Aux-Pl -> "have"
+Aux-Sg -> "had"
+Aux-Pl -> "had"
+Aux-Sg -> "did"
+Aux-Pl -> "did"
+Aux-Sg -> "will"
+Aux-Pl -> "will"
+Aux-Sg -> "should"
+Aux-Pl -> "should"
+Aux-Sg -> "would"
+Aux-Pl -> "would"
+Aux-Sg -> "may"
+Aux-Pl -> "may"
+Aux-Sg -> "might"
+Aux-Pl -> "might"
+Aux-Sg -> "must"
+Aux-Pl -> "must"
+Aux-Sg -> "can"
+Aux-Pl -> "can"
+Aux-Sg -> "could"
+Aux-Pl -> "could"
+Aux-Sg -> "does"
+Aux-Pl -> "do"
+Aux-Sg -> "need"
+Aux-Pl -> "need"
+
+// ===== Wh- Noun Phrase ====
+Wh-NP-Sg -> "when"
+Wh-NP-Pl -> "when"
+Wh-NP-Sg -> "who"
+Wh-NP-Pl -> "who"
+Wh-NP-Sg -> "where"
+Wh-NP-Pl -> "where"
+Wh-NP-Sg -> "what"
+Wh-NP-Pl -> "what"
+Wh-NP-Sg -> "what" Noun-Sg
+Wh-NP-Pl -> "what" Noun-Pl
+Wh-NP-Sg -> "whose" Noun-Sg
+Wh-NP-Pl -> "whose" Noun-Pl
+Wh-NP-Sg -> "which" Noun-Sg
+Wh-NP-Pl -> "which" Noun-Pl
+
+// ===== Pronoun =====
+4: Pronoun-Pl -> "you"
+Pronoun-Sg -> "yours"
+Pronoun-Pl -> "yours"
+2: Pronoun-Pl -> "yourself"
+Pronoun-Sg -> "him"
+Pronoun-Sg -> "his"
+Pronoun-Pl -> "his"
+2: Pronoun-Sg -> "himself"
+Pronoun-Sg -> "her"
+Pronoun-Sg -> "hers"
+Pronoun-Pl -> "hers"
+2: Pronoun-Sg -> "herself"
+4: Pronoun-Sg -> "it"
+Pronoun-Sg -> "its"
+Pronoun-Pl -> "its"
+Pronoun-Sg -> "itself"
+4: Pronoun-Sg -> "ours"
+4: Pronoun-Pl -> "ours"
+2: Pronoun-Pl -> "ourself"
+Pronoun-Sg -> "theirs"
+Pronoun-Pl -> "theirs"
+2: Pronoun-Pl -> "themselves"
+
+// ===== Relative Pronoun =====
+Rel-Pronoun -> "who"
+Rel-Pronoun -> "which"
+Rel-Pronoun -> "that"
+
+// ===== In espg_lexicon.txt =====
+// Proper-Noun-Sg
+// Proper-Noun-Pl
+// Noun-Sg
+// Noun-Pl
+// Gerund-V
+// Verb-Sg
+// Verb-Pl
