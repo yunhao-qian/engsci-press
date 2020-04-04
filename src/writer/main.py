@@ -15,7 +15,7 @@ def create_espg():
 
 if __name__ == '__main__':
     espg = create_espg()
-    writer = Writer(espg)
+    writer = Writer(espg, 3, 10, 15)
     while True:
         input('------------------------------------------------------------')
         article = writer.generate()

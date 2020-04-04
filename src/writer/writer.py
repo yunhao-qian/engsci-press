@@ -12,13 +12,13 @@ class Sentence:
     def __str__(self):
         elements = []
         for token in self.tokens:
-            if token in punctuation and len(elements) > 0:
-                elements[-1] = elements[-1] + token
-            else:
-                if len(elements) == 0:
-                    elements.append(token.capitalize())
+            if len(elements) > 0:
+                if token[0] in punctuation or elements[-1][-1] in punctuation:
+                    elements[-1] += token
                 else:
                     elements.append(token)
+            else:
+                elements.append(token.capitalize())
         return ' '.join(elements)
 
     def word_count(self):

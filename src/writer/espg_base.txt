@@ -38,18 +38,18 @@ Rel-Clause-Sg -> Rel-Pronoun VP-Sg
 Rel-Clause-Pl -> Rel-Pronoun VP-Pl
 
 // ===== Verb Phrase =====
-VP-Sg -> Verb-Sg
-VP-Sg -> Verb-Sg NP-Sg
-VP-Sg -> Verb-Sg NP-Pl
-VP-Sg -> Verb-Sg NP-Sg PP
-VP-Sg -> Verb-Sg NP-Pl PP
-VP-Sg -> Verb-Sg PP
-VP-Pl -> Verb-Pl
-VP-Pl -> Verb-Pl NP-Sg
-VP-Pl -> Verb-Pl NP-Pl
-VP-Pl -> Verb-Pl NP-Sg PP
-VP-Pl -> Verb-Pl NP-Pl PP
-VP-Pl -> Verb-Pl PP
+VP-Sg -> Verb-I-Sg
+VP-Sg -> Verb-T-Sg NP-Sg
+VP-Sg -> Verb-T-Sg NP-Pl
+VP-Sg -> Verb-T-Sg NP-Sg PP
+VP-Sg -> Verb-T-Sg NP-Pl PP
+VP-Sg -> Verb-I-Sg PP
+VP-Pl -> Verb-I-Pl
+VP-Pl -> Verb-T-Pl NP-Sg
+VP-Pl -> Verb-T-Pl NP-Pl
+VP-Pl -> Verb-T-Pl NP-Sg PP
+VP-Pl -> Verb-T-Pl NP-Pl PP
+VP-Pl -> Verb-I-Pl PP
 
 // ===== Adjective Phrase =====
 AP -> Adj
@@ -168,10 +168,13 @@ Rel-Pronoun -> "which"
 Rel-Pronoun -> "that"
 
 // ===== In espg_lexicon.txt =====
-// Proper-Noun-Sg
-// Proper-Noun-Pl
 // Noun-Sg
 // Noun-Pl
 // Gerund-V
-// Verb-Sg
-// Verb-Pl
+// Verb-I-Sg
+// Verb-T-Sg
+// Verb-I-Pl
+// Verb-T-Pl
+// Preposition
+// Adj
+// Adv
