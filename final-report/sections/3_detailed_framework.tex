@@ -1,0 +1,17 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection{High-Level Overview}
+
+\subsection{Languages}
+
+I use C for the core dictionary because it runs faster and provides more precise memory control. I initially wrote it in Python, but it took 3 seconds to launch and violated the time constraint. The bottleneck turns out to be CPU computation as opposed to disk IO. Moving to C should effectively speed it up since compiled languages typically compute much faster than interpreted languages.
+
+I use Python for the story writer because it is easier to code, supports regular expression and features various sampling methods. Usage of these functionality is described in <Section>. Python libraries such as NumPy have a mature and efficient C/Fortran back-end. Compared to reinvented wheels, they are faster, more robust and easier to debug. Moreover, exception mechanism in Python makes it simpler to handle special cases that appear in a natural language.
+
+\subsection{Data Structures}
+
+\subsection{Software Implementation}
+
+\end{document}

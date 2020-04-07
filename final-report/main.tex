@@ -1,0 +1,37 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\renewcommand{\baselinestretch}{1.5}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+\usepackage{indentfirst}
+
+\usepackage{subfiles}
+
+\begin{document}
+
+\begin{titlepage}
+	\subfile{sections/0_title_page}
+\end{titlepage}
+
+\section{Introduction}
+\subfile{sections/1_introduction}
+
+\section{Objectives}
+\subfile{sections/2_objectives}
+
+\section{Detailed Framework}
+\subfile{sections/3_detailed_framework}
+
+\section{Results}
+\subfile{sections/4_results}
+
+\section{Future Work/Conclusion}
+\subfile{sections/5_future_work_conclusion}
+
+\section*{Appendices}
+\subfile{sections/6_appendices}
+
+\end{document}

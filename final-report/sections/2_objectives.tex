@@ -1,0 +1,38 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+The core dictionary program should:
+
+\begin{enumerate}
+	\item \textit{Launch and response fast.}
+	A slow start-up puts the user in a bad mood even before s/he starts using the program.
+	
+	\textbf{Metric:} Measure the time interval between a user request and its response. Shorter time in seconds is better. Startup time should be less than 1 second.
+	
+	\item \textit{Use memory efficiently.}
+	Users might run the program on an outdated computer or a virtual machine, which typically has very limited memory. Large memory use hurts performance and can cause system failure.
+	
+	\textbf{Metric:} Measure the increased memory usage after loading the same dictionary dataset. Less memory in megabytes is better.
+	
+	\item \textit{Add dictionary entries easily.}
+	The provided data have a lot of typos. Users like me might be unsatisfied and want to customize them. After following a clear and simple procedure, users should be able to add data files with the same format.
+	
+	\textbf{Metric:} Count the number of operations to load a CSV file into the dictionary dataset. Fewer operations are better.
+\end{enumerate}
+
+The story writer program should:
+
+\begin{enumerate}
+	\item \textit{Produce grammatically correct sentences.}
+	To generate meaningful and logical stories is beyond my ability. To tell my story writer apart from a monkey hitting keys, the only way is to force my production grammatically correct.
+	
+	\textbf{Metric:} Copy and paste the produced text into Microsoft Word. Green underlines flag grammatical errors. Fewer grammatical errors per sentence are better.
+	
+	\item \textit{Control the length of generated text accurately.}
+	Sentence generation is slow, so it is a waste of time to work on unneeded sentences.
+	
+	\textbf{Metric:} Calculate the percentage difference between the user-specified length and the length of generated text. Smaller average difference is better.
+\end{enumerate}
+
+\end{document}
