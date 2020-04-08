@@ -1,0 +1,41 @@
+digraph trie {
+    graph [margin = 0, nodesep = 0.1, ranksep = 0.2];
+    node [shape = circle, style = filled, fillcolor = white, fontsize = 12,
+          fixedsize = shape, width = 0.35, height = 0.35];
+    edge [arrowsize = 0.6];
+
+    N1 [label = ""];
+    N2 [label = "c"];
+    N3 [label = "m"];
+    N4 [label = "a"];
+    N5 [label = "h"];
+    N6 [label = "a"];
+    N7 [label = "i"];
+    N8 [label = "t", fillcolor = lightgray];
+    N9 [label = "p", fillcolor = lightgray];
+    N10 [label = "i"];
+    N11 [label = "n", fillcolor = lightgray];
+    N12 [label = "i"];
+    N13 [label = "n"];
+    N14 [label = "c"];
+    N15 [label = "t"];
+    N16 [label = "l"];
+    N17 [label = "l", fillcolor = lightgray];
+    N18 [label = "d", fillcolor = lightgray];
+    N19 [label = "h", fillcolor = lightgray];
+    N20 [label = "a"];
+    N21 [label = "u"];
+    N22 [label = "d", fillcolor = lightgray];
+    N23 [label = "i"];
+    N24 [label = "r"];
+    N25 [label = "n", fillcolor = lightgray];
+    N26 [label = "e", fillcolor = lightgray];
+
+    N1 -> N2 -> N4 -> N8 -> N14 -> N19;
+    N1 -> N3 -> N6 -> N11;
+    N2 -> N5 -> N10 -> N16 -> N22;
+    N3 -> N7 -> N13 -> N18;
+    N4 -> N9 -> N15 -> N20 -> N23 -> N25;
+    N6 -> N12 -> N17;
+    N15 -> N21 -> N24 -> N26;
+}
