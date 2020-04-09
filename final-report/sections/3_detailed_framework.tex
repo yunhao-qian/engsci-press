@@ -8,7 +8,7 @@
 	\centering
 	\includegraphics[scale=0.6]{project_structure}
 	\caption{Overview of the project structure. Some fields and methods are omitted.}
-	\label{figure:project_structure}
+	\label{fig:project_structure}
 \end{figure}
 
 \subsection{Languages}
@@ -21,26 +21,26 @@ I use Python for the story writer because it is easier to code, supports regular
 
 \subsubsection{Dynamic Array}
 
-Many functions in EngSci Press require a resizable and contiguous array. The most straightforward implementation is a block memory which is reallocated on each resize. However, frequent \texttt{realloc}s slow down the program. To make a trade-off between fewer \texttt{realloc}s and more compact storage, my custom \texttt{Array} type applies an exponential resizing strategy. It reserves more memory than its actual size. As shown in Figure \ref{figure:dynamic_array}, the memory space doubles when $\textrm{size} \geq \textrm{capacity}$ and halves when $\textrm{size} \leq \textrm{capacity} / 2$. A similar strategy is used for the \texttt{String} type.
+Many functions in EngSci Press require a resizable and contiguous array. The most straightforward implementation is a block memory which is reallocated on each resize. However, frequent \texttt{realloc}s slow down the program. To make a trade-off between fewer \texttt{realloc}s and more compact storage, my custom \texttt{Array} type applies an exponential resizing strategy. It reserves more memory than its actual size. As shown in Figure \ref{fig:dynamic_array}, the memory space doubles when $\textrm{size} \geq \textrm{capacity}$ and halves when $\textrm{size} \leq \textrm{capacity} / 2$. A similar strategy is used for the \texttt{String} type.
 
 \begin{figure}
 	\centering
 	\includegraphics{dynamic_array}
 	\caption{A dynamic array reserves space for future expansion.}
-	\label{figure:dynamic_array}
+	\label{fig:dynamic_array}
 \end{figure}
 
 For convenience, an \texttt{Array} of pointers is designed to hold an optional destructor and execute it upon every element deletion. The destructor function frees all the memory that an element uses, both directly and indirectly.
 
 \subsubsection{Trie}
 
-I choose trie to store, access and modify dictionary data because it is efficient and easy to implement. Trie is a tree-like data structure that implements mapping with string keys. As shown in Figure \ref{figure:trie}, each node holds a single character. The key of a node is represented by the character sequence along the root-node path.
+I choose trie to store, access and modify dictionary data because it is efficient and easy to implement. Trie is a tree-like data structure that implements mapping with string keys. As shown in Figure \ref{fig:trie}, each node holds a single character. The key of a node is represented by the character sequence along the root-node path.
 
 \begin{figure}
 	\centering
 	\includegraphics{trie}
 	\caption{A trie. Each shadowed node represents an English word.}
-	\label{figure:trie}
+	\label{fig:trie}
 \end{figure}
 
 Headwords are lower-cased as keys of dictionary entries, enabling case-insensitive search. Moreover, keys accept only characters whose ASCII codes fall in 32--64 or 97--122, because others are either upper-cased, or meaningless to appear in a dictionary headword. As a result, a trie node has 59 children at most.
@@ -49,10 +49,20 @@ For simplicity, mapping from a node to its children is implemented with a 59-ele
 
 \subsubsection{Levenshtein Automaton}
 
-\subsection{Software Implementation}
+\subsection{Algorithms}
 
 \subsubsection{Context-Free Grammar}
 
+EngSci Press Grammar (ESPG) is a context-free grammar (CFG) that generates English sentences. A CFG contains a start symbol (S) and describes many rewriting rules. The left-hand side (LHS) of a rule is a single token, and the right-hand side (RHS) is a sequence of at least one tokens. The rewriting process terminates when all tokens become English words (or terminals).
+
+Stricter grammars such as regular grammar are not descriptive enough for a natural language, while more flexible ones can be challenging to implement for a generative purpose. For example, context-sensitive grammars, with more than one token on the LHS, can easily go into a blind alley, making it impossible to substitute all non-terminals.
+
+Describing CFG with a Python \texttt{dict} is not hard, but wordy. To make my grammar more readable and maintainable, I design a simple description syntax as shown in <Figure>. The text is parsed with \texttt{re} (regular expression) module and expanded into a \texttt{class CFG} instance. To make the output more natural, this syntax supports optional tokens (i.e.\ RHS tokens that can be omitted by a specified percentage chance) and weighted rules (i.e.\ with the same LHS, one rule has a higher execution chance than another).
+
 \subsubsection{Story Length Control}
+
+Properties of a CFG determine the length distribution of its generated sentences. CFG rules can be recursive, where the LHS token appears on the RHS. Such rules, as $A \rightarrow A B$, have a risk of falling into infinite loops: $A \rightarrow A B \rightarrow A B B \rightarrow A B B B \rightarrow \cdots$. A primitive yet effective patch for this is to set a convergence factor $\alpha$. Weight of a rule decreases by $\alpha$ on each execution. As a result, non-recursive rules are preferred as a sentence grows longer, forcing a finite output.
+
+When generating an article, users might also want to specify the word/paragraph count. However, imagine every paragraph has exactly the same number of sentences -- such uniformity makes the output non-human-like. To address this issue, EngSci Press determines paragraph lengths by Poisson sampling, given the fact that lengths of human writings roughly follow a Poisson distribution. $\lambda$ parameter of this distribution is user-defined, an indirect way to control story length.
 
 \end{document}

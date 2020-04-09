@@ -2,6 +2,17 @@
 
 \begin{document}
 
-Hello.
+As mentioned in <Section>, EngSci Press generally meets my expectation. However, more objectives emerge as I work on this project, which might serve as a guide for future work
+
+\begin{enumerate}
+	\item \textit{Unicode support.}
+	Many users look up words in a different language, so it is hard to avoid non-ASCII characters. Unfortunately, this need has not yet been satisfied as a result of limited Unicode support in C standard library. Porting from \texttt{char} to \texttt{wchar\_t}, the most common approach, can cause a memory disaster, quadrupling the current 300MB to 1.2GB. I prefer variable-width encoding because it is more memory-efficient. It is very messy to implement and typically requires 3rd-party wheels.
+	
+	\item \textit{Compact trie.}
+	Currently, a trie node can hold one character at most. However, it will be appealing to put multiple characters together if a group of adjacent nodes have only one child for each. It saves memory for sure, and might also run faster because of smaller tree heights.
+	
+	\item \textit{Gammatical agreement.}
+	This phenomenon is common in a natural language (e.g. 3rd-person-singular verbs), but painful to describe in CFG.
+\end{enumerate}
 
 \end{document}
