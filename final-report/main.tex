@@ -4,20 +4,38 @@
 \usepackage{indentfirst}
 \linespread{1.3}
 
+\usepackage[inline]{enumitem}
+\setlist[enumerate]{nosep}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
 \usepackage{fontspec}
 \setmainfont{Times New Roman}
+
+\usepackage[compact]{titlesec}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}
+{\settowidth}
+{\setlength{\parsep}{0pt}\setlength{\itemsep}{0pt plus 0.1pt}\settowidth}
+{}{}
+
+\usepackage{hyperref}
+\urlstyle{same}
 
 \usepackage{graphicx}
 \graphicspath{{images/}}
 
-\usepackage{minitoc}
-
 \usepackage{listings}
 \usepackage{xcolor}
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{codegray}{rgb}{0.5,0.5,0.5}
-\definecolor{codepurple}{rgb}{0.58,0,0.82}
-\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{codegreen}{rgb}{0, 0.6, 0}
+\definecolor{codegray}{rgb}{0.5, 0.5, 0.5}
+\definecolor{codepurple}{rgb}{0.58, 0, 0.82}
+\definecolor{backcolour}{rgb}{0.95, 0.95, 0.92}
 \lstdefinestyle{mystyle}{
 	backgroundcolor=\color{backcolour},
 	commentstyle=\color{codegreen},
@@ -42,9 +60,6 @@
 
 \begin{document}
 
-\dosecttoc
-\faketableofcontents
-
 \begin{titlepage}
 	\subfile{sections/0_title_page}
 \end{titlepage}
@@ -59,10 +74,63 @@
 \subfile{sections/3_detailed_framework}
 
 \section{Results}
+\label{sec:results}
 \subfile{sections/4_results}
 
 \section{Future Work/Conclusion}
 \subfile{sections/5_future_work_conclusion}
+
+\begin{thebibliography}{20}
+	\raggedright
+	
+	\bibitem{bib:part_of_speech_tagging}
+	Part-of-speech tagging. (2020, February 15). Retrieved from \url{https://en.wikipedia.org/wiki/Part-of-speech_tagging}
+	
+	\bibitem{bib:1s_time_limit}
+	World Leaders in Research-Based User Experience. (n.d.). Response Time Limits: Article by Jakob Nielsen. Retrieved from \url{https://www.nngroup.com/articles/response-times-3-important-limits/}
+	
+	\bibitem{bib:compiled_vs_interpreted}
+	freeCodeCamp. (n.d.). Compiled Versus Interpreted Languages. Retrieved from \url{https://guide.freecodecamp.org/computer-science/compiled-versus-interpreted-languages/}
+	
+	\bibitem{bib:numpy_sampling}
+	Random sampling (numpy.random)¶. (n.d.). Retrieved from \url{https://docs.scipy.org/doc/numpy-1.15.0/reference/routines.random.html}
+	
+	\bibitem{bib:numpy_source_code}
+	Numpy. (2020, April 8). numpy/numpy. Retrieved from \url{https://github.com/numpy/numpy}
+	
+	\bibitem{bib:realloc_cost}
+	Why not realloc. (n.d.). Retrieved from \url{http://www.iso-9899.info/wiki/Why_not_realloc}
+	
+	\bibitem{bib:trie_efficiency}
+	Trie: (Insert and Search). (2019, September 4). Retrieved from \url{https://www.geeksforgeeks.org/trie-insert-and-search/}
+	
+	\bibitem{bib:edit_distance}
+	Levenshtein distance. (2020, April 7). Retrieved from \url{https://en.wikipedia.org/wiki/Levenshtein_distance}
+	
+	\bibitem{bib:levenshtein_automaton}
+	Levenshtein automata can be simple and fast. (n.d.). Retrieved from \url{http://julesjacobs.github.io/2015/06/17/disqus-levenshtein-simple-and-fast.html}
+	
+	\bibitem{bib:context_free_grammar}
+	Formal Grammars of English. (n.d.). In \textit{Speech and Language Processing: An Introduction to Speech Recognition}. Retrieved from \url{https://cs.pomona.edu/~kim/CSC181S08/text/12.pdf}
+	
+	\bibitem{bib:regular_grammar}
+	Buttery, P. (2018). Formal Models of Language: Formal versus Natural Language. Retrieved from \url{https://www.cl.cam.ac.uk/teaching/1718/ForModLang/notes/Formal_vs_Natural_part1.pdf}
+	
+	\bibitem{bib:recursive_grammar}
+	Recursive grammar. (2018, March 21). Retrieved from \url{https://en.wikipedia.org/wiki/Recursive_grammar}
+	
+	\bibitem{bib:convergence_factor}
+	Generating random sentences from a context free grammar. (n.d.). Retrieved from \url{https://eli.thegreenplace.net/2010/01/28/generating-random-sentences-from-a-context-free-grammar}
+	
+	\bibitem{bib:engsci_press_media}
+	EngSci Press Media. (n.d.). Retrieved from \url{https://drive.google.com/drive/folders/1HlUrUqNho2NtZmqC4janL1xukYZtF2lg?usp=sharing}
+	
+	\bibitem{bib:c_unicode}
+	Unicode in C and C : What You Can Do About It Today. (n.d.). Retrieved \url{from https://www.cprogramming.com/tutorial/unicode.html}
+	
+	\bibitem{bib:wchar_t}
+	Wide character. (2019, December 5). Retrieved from \url{https://en.wikipedia.org/wiki/Wide_character}
+\end{thebibliography}
 
 \clearpage
 

@@ -196,7 +196,7 @@ if __name__ == '__main__':
     cfg = CFG(demo_grammar)
     print(cfg)
     while True:
-        input('------------------------------------------------------------')
+        input('=' * 80)
         try:
             tokens = cfg.generate(max_length=30)
         except Exception as exception:

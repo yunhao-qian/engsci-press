@@ -314,7 +314,7 @@ def write_lexicon(lexicon, stream):
             stream.write('{} -> "{}"\n'.format(tag, terminal))
 
 
-if __name__ == '__main__':
+def create_write_lexicon():
     try:
         output = open('espg_lexicon.txt', 'w')
     except:
@@ -324,10 +324,14 @@ if __name__ == '__main__':
         file_name = ('../../Dictionary-in-csv/{}.csv'.format(chr(i)))
         try:
             with open(file_name, 'r') as stream:
-                lines = open(file_name, 'r').readlines()
+                lines = stream.readlines()
         except:
             print('Failed to open file: {}'.format(file_name))
         else:
             lexicon = create_lexicon(lines)
             write_lexicon(lexicon, output)
     output.close()
+
+
+if __name__ == '__main__':
+    create_write_lexicon()

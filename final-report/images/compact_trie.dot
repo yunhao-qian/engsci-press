@@ -1,0 +1,28 @@
+digraph trie {
+    graph [margin = 0, nodesep = 0.1, ranksep = 0.15];
+    node [shape = ellipse, style = filled, fillcolor = white, fontsize = 12,
+          fixedsize = shape, width = 0.3, height = 0.3];
+    edge [arrowsize = 0.5];
+
+    N1 [label = ""];
+    N2 [label = "c"];
+    N3 [label = "m"];
+    N4 [label = "a"];
+    N5 [label = "hild", width = 0.4, fillcolor = lightgray];
+    N6 [label = "a"];
+    N7 [label = "ind", width = 0.4, fillcolor = lightgray];
+    N8 [label = "tch", width = 0.4, fillcolor = lightgray];
+    N9 [label = "pt", width = 0.4];
+    N10 [label = "n", fillcolor = lightgray];
+    N11 [label = "il", width = 0.4, fillcolor = lightgray];
+    N12 [label = "ain", width = 0.4, fillcolor = lightgray];
+    N13 [label = "urc", width = 0.4, fillcolor = lightgray];
+
+    N1 -> N2 -> N4 -> N8;
+    N1 -> N3 -> N6 -> N10;
+    N2 -> N5;
+    N3 -> N7;
+    N4 -> N9 -> N12;
+    N6 -> N11;
+    N9 -> N13;
+}

@@ -1,8 +1,8 @@
 digraph trie {
-    graph [margin = 0, nodesep = 0.1, ranksep = 0.2];
+    graph [margin = 0, nodesep = 0.1, ranksep = 0.15];
     node [shape = circle, style = filled, fillcolor = white, fontsize = 12,
-          fixedsize = shape, width = 0.35, height = 0.35];
-    edge [arrowsize = 0.6];
+          fixedsize = shape, width = 0.3, height = 0.3];
+    edge [arrowsize = 0.5];
 
     N1 [label = ""];
     N2 [label = "c"];

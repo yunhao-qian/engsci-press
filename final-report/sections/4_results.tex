@@ -2,6 +2,26 @@
 
 \begin{document}
 
-Hello.
+The core dictionary fully meets my objectives:
+
+\begin{enumerate}
+	\item Start-up is extraordinary fast, loading nearly 200,000 entries in less than 0.2 second.
+	
+	\item It occupies 230M memory (shown in Figure \ref{fig:memory_consumption}), about 30\% less than the Python version.
+	
+	\item Users can load a \texttt{.csv} file by typing a single line. This step can be automated by adding the command to a pre-run script.
+\end{enumerate}
+
+The story writer has more room for improvement:
+
+\begin{enumerate}
+	\item Out of my expectation, many obscure words in the dictionary are not recognized by Microsoft Word, which is shown in Figure \ref{fig:word_spell_checker}. As a result, the grammar checker fails to analyse their part-of-speech properties or report errors. In spite of this, I find hardly any grammar mistakes by inspection.
+	
+	\item Frequent obscure words (especially biological terminology) also make the generated sentences challenging to understand.
+	
+	\item Output length control is not precise enough as a result of Poisson sampling. Deviation is up to 50\%.
+\end{enumerate}
+
+Screen recordings of running programs are archived in a Google Drive folder \cite{bib:engsci_press_media}, and a sample of story writer output are attached in Appendix \ref{sec:sample_output}.
 
 \end{document}

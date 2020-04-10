@@ -1,8 +1,8 @@
-*
-.gitignore
-*.md
-*.tex
-*.pdf
-*.dot
-*.pptx
-*.svg
+*.aux
+*.log
+*.maf
+*.mtc*
+*.out
+*.stc*
+*.gz
+*.toc
